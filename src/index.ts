@@ -29,6 +29,7 @@ export class AsyncLock {
         if (old_value !== 1) { // this lock is broken because we are call unlock without lock
             throw new Error('call unlock before lock')
         }
+        Atomics.notify(this.array, 0, 1)
     }
 
     public async lock(timeout: number = undefined): Promise<boolean> {
