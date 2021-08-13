@@ -4,3 +4,6 @@ publish: build
 
 build:
 	npx microbundle
+
+test:
+	yarn jest
