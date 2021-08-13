@@ -12,6 +12,13 @@ test("test simple lock", async () => {
     lock.unlock()
 })
 
+test("unlock error", async () => {
+    const lock = new AsyncLock()
+    expect(() => {
+        lock.unlock()
+    }).toThrow('call unlock before lock')
+})
+
 
 test("timeout", async () => {
     const lock = new AsyncLock()
