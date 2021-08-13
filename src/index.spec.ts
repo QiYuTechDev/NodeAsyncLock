@@ -19,6 +19,13 @@ test("unlock error", async () => {
     }).toThrow('call unlock before lock')
 })
 
+test("timed-out", async () => {
+    const lock = new AsyncLock()
+    await lock.lock()
+    const f = await lock.lock(50)
+    expect(f).toBe(false)
+})
+
 
 test("timeout", async () => {
     const lock = new AsyncLock()

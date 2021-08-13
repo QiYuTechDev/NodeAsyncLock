@@ -50,7 +50,7 @@ export class AsyncLock {
 
     /**
      * lock with timeout
-     * @param timeout
+     * @param timeout unit: ms
      * @return true if get lock otherwise false
      */
     public async lock(timeout: number = undefined): Promise<boolean> {
