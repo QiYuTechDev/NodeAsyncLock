@@ -54,7 +54,7 @@ export class AsyncLock {
                 if (value == 'timed-out' && timeout !== undefined) { // 返回 timeout 如果用户设置了超时
                     return false
                 }
-                // value == 'not-equal' we are going to lock
+                // value == 'not-equal' we are going to try re-lock
             }
         }
     }
