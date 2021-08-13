@@ -35,3 +35,11 @@ test("timeout", async () => {
     expect(lock.isLocked()).toBe(false)
     await sleep(150)
 })
+
+test("no timeout", async () => {
+    const lock = new AsyncLock()
+    const ok = await lock.lock(0)
+    expect(ok).toBe(true)
+    const o2 = await lock.lock(0)
+    expect(o2).toBe(false)
+})

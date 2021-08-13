@@ -36,7 +36,7 @@ export class AsyncLock {
         for (; ;) {
             const lock = this.tryLock()
             if (lock) {
-                return
+                return true
             }
             // https://github.com/tc39/proposal-atomics-wait-async/blob/master/PROPOSAL.md
             // @ts-ignore: waitAsync is indeed exists
@@ -46,12 +46,12 @@ export class AsyncLock {
                 if (value == 'ok') {
                     return true
                 }
-                if (value == 'timed-out' && timeout) { // 返回 timeout 如果用户设置了超时
+                if (value == 'timed-out' && timeout !== undefined) { // 返回 timeout 如果用户设置了超时
                     return false
                 }
             } else {
                 const value = result.value
-                if (value == 'timed-out' && timeout) { // 返回 timeout 如果用户设置了超时
+                if (value == 'timed-out' && timeout !== undefined) { // 返回 timeout 如果用户设置了超时
                     return false
                 }
                 // value == 'not-equal' we are going to lock
