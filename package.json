@@ -1,5 +1,5 @@
 {
-  "name": "@qiyutech/async-lock",
+  "name": "qiyu-async-lock",
   "version": "v0.0.1",
   "description": "Async Lock in Node Env",
   "keywords": [
