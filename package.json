@@ -1,0 +1,33 @@
+{
+  "name": "@qiyutech/async-lock",
+  "version": "v0.0.1",
+  "description": "Async Lock in Node Env",
+  "keywords": [
+    "async-lock",
+    "lock",
+    "node"
+  ],
+  "homepage": "https://github.com/QiYuTechDev/NodeAsyncLock",
+  "bugs": {
+    "url": "https://github.com/QiYuTechDev/NodeAsyncLock",
+    "email": "dev@qiyutech.tech"
+  },
+  "license": "AGPL",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/QiYuTechDev/NodeAsyncLock"
+  },
+  "files": [
+  ],
+  "type": "module",
+  "main": "./dist/async_lock.cjs",
+  "umd:main": "dist/async_lock.umd.js",
+  "module": "dist/async_lock.mjs",
+  "source": "src/index.ts",
+  "types": "dist/index.d.ts",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "microbundle": "^0.13.3"
+  }
+}
