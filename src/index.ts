@@ -14,6 +14,11 @@ export class AsyncLock {
         this.#array = new Int32Array(buffer)
     }
 
+    public isLocked(): boolean {
+        const value = Atomics.load(this.#array, 0)
+        return value > 0
+    }
+
     public tryLock(): boolean {
         const old_value = Atomics.compareExchange(this.#array, 0, 0, 1)
         return old_value === 0
@@ -33,6 +38,7 @@ export class AsyncLock {
                 return
             }
             // https://github.com/tc39/proposal-atomics-wait-async/blob/master/PROPOSAL.md
+            // @ts-ignore: waitAsync is indeed exists
             const result = Atomics.waitAsync(this.#array, 0, 1, timeout) as LockResult
             if (result.async) {
                 const value = await result.value
