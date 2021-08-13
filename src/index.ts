@@ -5,6 +5,9 @@ export interface LockResult {
 
 /**
  * AsyncLock in node env
+ *
+ * WARNING: this impl in only works on NodeJS
+ *          [NOT WORK FOR BROWSER]
  */
 export class AsyncLock {
     private readonly array: Int32Array
@@ -14,24 +17,42 @@ export class AsyncLock {
         this.array = new Int32Array(buffer)
     }
 
+    /**
+     * check if the lock is `locked`
+     * @return true if locked otherwise false
+     */
     public isLocked(): boolean {
         const value = Atomics.load(this.array, 0)
         return value > 0
     }
 
+    /**
+     * try `locked` the lock
+     * @return true if locked otherwise false
+     */
     public tryLock(): boolean {
         const old_value = Atomics.compareExchange(this.array, 0, 0, 1)
         return old_value === 0
     }
 
+    /**
+     * unlock the `locked` lock
+     */
     public unlock(): void {
         const old_value = Atomics.compareExchange(this.array, 0, 1, 0)
         if (old_value !== 1) { // this lock is broken because we are call unlock without lock
             throw new Error('call unlock before lock')
         }
+        // only notify one waiter
         Atomics.notify(this.array, 0, 1)
     }
 
+
+    /**
+     * lock with timeout
+     * @param timeout
+     * @return true if get lock otherwise false
+     */
     public async lock(timeout: number = undefined): Promise<boolean> {
         for (; ;) {
             const lock = this.tryLock()
