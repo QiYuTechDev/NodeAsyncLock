@@ -30,6 +30,6 @@ jobs:
         run: yarn install
 
       # Runs a set of commands using the runners shell
-      - name: Run Jest test
+      - name: Run Jest
         run: |
-          yarn test
+          yarn jest
