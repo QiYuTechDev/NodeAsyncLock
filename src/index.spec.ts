@@ -22,18 +22,26 @@ test("unlock error", async () => {
 
 test("timeout", async () => {
     const lock = new AsyncLock()
-    await lock.lock()
-    setTimeout(async () => {
+
+    const f1 = async () => {
+        await sleep(100)
         const ok = await lock.lock(100)
         expect(ok).toBe(false)
         const o2 = await lock.lock(100)
         expect(o2).toBe(true)
-    })
-    await sleep(150)
-    expect(lock.isLocked()).toBe(true)
-    lock.unlock()
-    expect(lock.isLocked()).toBe(false)
-    await sleep(150)
+    }
+
+    const f2 = async () => {
+        const o1 = await lock.lock()
+        expect(o1).toBe(true)
+        await sleep(250)
+        expect(lock.isLocked()).toBe(true)
+        lock.unlock()
+        expect(lock.isLocked()).toBe(false)
+        await sleep(150)
+    }
+
+    await Promise.all([f1(), f2()])
 })
 
 test("no timeout", async () => {
@@ -42,4 +50,14 @@ test("no timeout", async () => {
     expect(ok).toBe(true)
     const o2 = await lock.lock(0)
     expect(o2).toBe(false)
+})
+
+
+test("promise all", async () => {
+    const ret = await Promise.all([
+        (async () => {
+            return 1
+        })()
+    ])
+    expect(ret).toStrictEqual([1])
 })
