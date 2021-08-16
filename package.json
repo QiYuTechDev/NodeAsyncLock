@@ -1,6 +1,6 @@
 {
   "name": "qiyu-async-lock",
-  "version": "v0.0.2",
+  "version": "v0.1.0",
   "description": "Async Lock in Node Env",
   "keywords": [
     "async-lock",
@@ -24,7 +24,7 @@
     "dist/async_lock.umd.js",
     "dist/index.d.ts"
   ],
-  "main": "./dist/async_lock.cjs",
+  "main": "./dist/async_lock.js",
   "umd:main": "dist/async_lock.umd.js",
   "module": "dist/async_lock.mjs",
   "source": "src/index.ts",
